@@ -31,6 +31,15 @@ setup(
         "lxml",
         "hidapi",
         "tianshou==0.4.10",
+        # --- whole-body IK + data tooling needed by the GR1 / abstract paths ---
+        # mink 0.0.10 is the last release that (a) keeps the `mink.tasks.exceptions`
+        # import path used by robosuite's mink_controller and (b) requires
+        # mujoco>=3.1.6 (compatible with the pinned mujoco==3.2.6). mink 0.0.11+
+        # moved that symbol (ImportError) and 1.x requires mujoco>=3.3 (conflicts
+        # with 3.2.6), so an unpinned mink breaks `--robots GR1TwoHand`.
+        "mink==0.0.10",
+        "quadprog",          # default QP backend for mink.solve_ik
+        "huggingface_hub",   # used by scripts/download_mimicdroid_dataset.py
     ],
     eager_resources=["*"],
     include_package_data=True,
